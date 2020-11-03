@@ -2,12 +2,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-TEMPLATE_DIR = BASE_DIR / 'templates'
-STATIC_DIR = BASE_DIR / 'static'
-PKL_DIR = BASE_DIR / 'pkl'
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'j2*zfrrmh=5d&k8qyq=cv-_6$8+uo6r(v#ox6x(y!ibj@gqu__'
@@ -59,7 +53,7 @@ ROOT_URLCONF = 'common.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR, PKL_DIR, ],
+        'DIRS': [BASE_DIR / 'templates', BASE_DIR / 'pkl',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -138,10 +132,9 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 
 # Media files
@@ -182,4 +175,4 @@ EMAIL_HOST_PASSWORD = '*****'
 # ERRORS
 
 # Can't find 'en_core_web_sm'
-# python -m spacy download en_core_web_sm
+# -> pip install https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-2.2.0/en_core_web_sm-2.2.0.tar.gz --no-deps
