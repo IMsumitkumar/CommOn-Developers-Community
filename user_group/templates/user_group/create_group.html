@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>CommOn - choices</title>
+    <link rel="icon" type="image/x-icon" href="{% static "assets/img/favicon.ico" %}">
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static "assets/css/plugins.css" %}" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+  </head>
+  <body>
+    <div class="main-container">
+
+    <div class="page-header">
+            <div class="page-title">
+                <a href="{% url 'home' %}"><h3>CommOn | Groups</h3><a>
+                <br>	
+            </div>
+        </div>
+
+      <div class="jumbotron">
+        <form class="" entype='multipart/form-data' method="post">
+          {% csrf_token %}
+          <h1>Create your own group ! <span>--</span> Or <a href="{% url 'st_gp:gp_choice' %}"><button type="button" class="btn btn-outline-danger">Standard group</button></a> </h1>
+          <br>
+          {{ gc_form.group_name|add_class:"form-control"|attr:"placeholder:Group name . . ." }}
+          <br>
+          {{ gc_form.description|add_class:"form-control"|attr:"placeholder:Group description . . ." }}
+          <br>
+          
+          <div class="alert alert-danger" role="alert">{{ gc_form.errors }}</div>
+
+          <br>
+          <input id="multiple-reset" class="btn btn-primary" type="submit" name="" value="Create group">
+
+        </form>
+      </div>
+
+        <div class="jumbotron">
+        <p class="font-weight-boldl">You have already created these groups ... </p>
+
+        {% for group in my_group %}
+          <ul>
+             <li><p class="font-weight-bold">{{group.group_name}}</p></li>
+             <p>{{group.description}}</p>
+          </ul>
+        {% endfor %}
+        </div>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% load static %}
+{% load widget_tweaks %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>CORK Admin Template - Scrumboard Application</title>
+    <link rel="icon" type="image/x-icon" href="{% static "assets/img/favicon.ico" %}"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static "assets/css/plugins.css" %}" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <style>
+    code {
+        background: #e6e6e6;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        text-color: black;      
+
+    }
+    </style>
+
+</head>
+<body>
+    <div class="alt-menu sidebar-noneoverflow">
+        <!--  BEGIN NAVBAR  -->
+        <div class="header-container">
+            <header class="header navbar navbar-expand-sm">
+
+
+                <div class="nav-logo align-self-center">
+                    <a class="navbar-brand" href="{% url 'home' %}"><img alt="logo" src="{% static "assets/img/arrow-down.png" %}"> <span class="navbar-brand-name">CommOn | Delete task</span></a>
+                </div> 
+        
+            </header>
+        </div>
+        <!--  END NAVBAR  -->
+
+        <div class="container">
+        <div class="jumbotron">
+            <h2>Are you sure you want to delete <strong><code>({{task_item.task_name}})</code></strong></h2>
+            <br><br>
+            <form action="{% url 'delete_task' task_item.id %}" method='post'>
+            {% csrf_token %}
+            <a href="{% url 'project_home' %}" type="submit" class="btn btn-primary">Cancel</a>
+            <button type="submit" class="btn btn-primary">Confirm</button>
+            </form>
+        </div>
+        </div>
+    </div>
+
+    <div class="footer-wrapper">
+              <div class="footer-section f-section-1">
+                  <p class="">Copyright © 2020 <a target="_blank" href="#">CommOn.ai</a>, All rights reserved.</p>
+              </div>
+              <div class="footer-section f-section-2">
+                  <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> in india</p>
+              </div>
+          </div>
+        </div>
+        <!--  END CONTENT AREA  -->
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+{% load static %}
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>CommOn - choices</title>
+    <link rel="icon" type="image/x-icon" href="{% static "assets/img/favicon.ico" %}">
+ 
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    {% comment %} <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" /> {% endcomment %}
+    <link href="{% static "assets/css/plugins.css" %}" rel="stylesheet" type="text/css" />
+
+    <style>
+    .widget-group-card {
+        padding: 10px 40px;
+        background: #e2a03f;
+        background: linear-gradient(to right, #6b7764 0%, #2f384f 100%);
+        border-top-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+        border-top-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        
+    }
+
+    .widget-group-card .group-box h5 {
+        color: #e0e6ed;
+        margin-bottom: 0;
+        font-size: 17px;
+        font-weight: 600;
+    }
+    .widget-group-card .group-box p {
+        color: #e0e6ed;
+        font-weight: 700;
+        margin-bottom: 0;
+        align-self: center;
+    }
+
+
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+        <div class="page-header d-flex flex-row-reverse">
+            <div class="page-title">
+                <a href="{% url 'st_gp:gp_create' %}"><button class="btn btn-dark mb-2">Create Group</button></a>
+                <br>	
+            </div>
+            
+            <a href="{% url 'home' %}"><h3>CommOn | Groups</h3><a>
+        </div>
+
+        
+
+    {% for data in groups %}
+    <div class="row"}
+    <div class="col-md-4 layout-spacing">
+        <div class="card-body widget-group-card">
+            <div class="widget-content">
+                <div class="group-box">
+                    <h5 class="">{{data.group_name}}</h5>
+                    <br>
+                    <p>{{data.description}}</p>
+                    <br>
+
+                    <div>
+                      <a ><button class="btn btn-dark mb-2 group">Enter</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    {% endfor %}
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <script>
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+
+        buildList()
+
+
+        function buildList() {
+            var url = 'http://127.0.0.1:8000/ug_api/group-list/'
+            fetch(url)
+            .then((resp)=>resp.json())
+            .then(function(data){
+                var list = data
+
+                for (var i in list) {
+                    var Btn = document.getElementsByClassName('group')[i]
+
+
+                    Btn.addEventListener('click', (function(item){
+                        return function() {
+                            GroupItem(item)
+                        }
+                    }) (list[i]) )
+
+                }
+            })
+        }
+
+        
+
+
+
+        function GroupItem(item) {
+            console.log(item);
+            console.log("again clicked!"); 
+            fetch(`http://127.0.0.1:8000/ug_api/group-detail/${item.id}/`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                }
+            })
+            // window.location.pathname = '/chat/' + '?' + '/';
+            roonName = item["group_name"]
+            window.location.pathname = '/ug_api/' + roonName + '/';
+
+        }
+
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>CommOn - notes</title>
+    <link rel="icon" type="image/x-icon" href="{% static "assets/img/favicon.ico" %}">
+    <link href="{% static "assets/css/loader.css" %}" rel="stylesheet" type="text/css" />
+    <script src="{% static "assets/js/loader.js" %}"></script>
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static "assets/css/plugins.css" %}" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #body-lobby {
+            background-color:#FFFAFA;
+            padding: 10px 0px;
+            border-radius: 20px 20px 20px 20px;
+        }
+
+        .card-body {
+            box-shadow:0 0 20px 7px rgba(0,0,0,0.1);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .card{
+            margin: 20px 10px;
+        }
+
+        .card-body a {
+            color: #0c7f90;
+            text-decoration: none;
+            font-size: 15px;
+            margin-top: auto;
+            font-weight: 600;
+            
+        }
+
+    </style>
+
+  </head>
+  <body>
+    <!--  BEGIN NAVBAR  -->
+    <div class="header-container">
+        <header class="header navbar navbar-expand-sm">
+            <a href="{% url 'home' %}" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
+
+
+            <div class="nav-logo align-self-center">
+                <a class="navbar-brand" href="{% url 'home' %}"><img alt="logo" src="{% static "assets/img/arrow-down.png" %}"> <span class="navbar-brand-name">News | Posts</span></a>
+            </div>
+
+            <ul class="navbar-item flex-row mr-auto">
+                <li class="nav-item align-self-center search-animated"></li>
+            </ul>
+
+            <ul class="navbar-item flex-row nav-dropdowns">
+                
+
+                <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1">
+                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="user-profile-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="media">
+                            <img src="{{request.user.profile.profile_pic.url}}" class="img-fluid" alt="admin-profile">
+                            <div class="media-body align-self-center">
+                                <h6><span>Hi,</span> {{user.username}}</h6>
+                            </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </a>
+                    <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="user-profile-dropdown">
+                        <div class="">
+                            <div class="dropdown-item">
+                                <a class="" href="{% url 'profile:user_profile' %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> My Profile</a>
+                            </div>
+                            <div class="dropdown-item">
+                                <a class="" href="{% url 'logout' %}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg> Sign Out</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+        </header>
+    </div>
+    <!--  END NAVBAR  -->
+
+    <!-- POSTS START -->
+    <section id="body-lobby">
+        <div class="main-container">
+            <div class="row">
+                {% for post in posts %}
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <img src={{post.image.url}} class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">{{post.title}}</h5>
+                            <p class="card-text">{{post.body|truncatechars:50|linebreaks}}</p> 
+                            <a href="{% url 'st_gp:news_detail' post.slug %}" class="btn btn-outline-dark">Read here</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- POSTS END -->
+
+    <!--FOOTER-->
+    <div class="footer-wrapper">
+        <div class="footer-section f-section-1">
+            <p class="">Copyright © 2020 <a target="_blank" href="#">CommOn.ai</a>, All rights reserved.</p>
+        </div>
+        <div class="footer-section f-section-2">
+            <p class="">Made with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg> in INDIA</p>
+        </div>
+    </div>
+    <!--FOOTER-->
+  
+
+
+
+  <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+  <script src="{% static "assets/js/libs/jquery-3.1.1.min.js" %}"></script>
+  <script src="{% static "bootstrap/js/popper.min.js" %}"></script>
+  <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+  <script src="{% static "plugins/perfect-scrollbar/perfect-scrollbar.min.js" %}"></script>
+
+  <script src="{% static "assets/js/app.js" %}"></script>
+  <script>
+    $(document).ready(function() {
+        App.init();
+    });
+  </script>
+  <script src="{% static "assets/js/custom.js" %}"></script>
+
+  </body>
+</html>

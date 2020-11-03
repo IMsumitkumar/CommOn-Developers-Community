@@ -1,0 +1,28 @@
+{% extends 'recruit_team/team_base.html' %}
+{% block content %}
+    <div class="container">
+    <div class="jumbotron">
+        <h3>CommOn | Find a teammate</h3>
+        <a href="{% url 'ask_team' %}"><button type="button" class="btn btn-dark">Ask for team</button></a>
+        <hr>
+        {% for req in requests reversed %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'detail' req.slug %}">{{req.title}}</a></h5>
+                            <p class="card-text">{{req.description}}</p>
+                            <a href="#" class="btn btn-primary">Requirements: {{req.team_size}}</a>
+                            {% for tag in req.tags.all %}
+                                <a class="mr-1 badge badge-info">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    <div>
+{% endblock %} 
+
+<!-- href="{% url 'ask:tagged' tag.slug %}" -->>

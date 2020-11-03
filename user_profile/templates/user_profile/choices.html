@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>CommOn - choices</title>
+    <link rel="icon" type="image/x-icon" href="{% static "assets/img/favicon.ico" %}">
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="{% static "bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static "assets/css/plugins.css" %}" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <style>
+      .container {
+        position: relative;
+        background: linear-gradient(to right, #6b7764 0%, #2f384f 100%);
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        overflow: hidden;
+        border-radius: 6px;
+      
+      }
+      .jumbotron {
+          position: relative;
+          background: linear-gradient(to right, #6b7764 0%, #2f384f 100%);
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          overflow: hidden;
+      }
+      h1 {
+          color: white;
+        }
+
+    
+      
+    </style>
+  </head>
+  <body>
+      <div class="alt-menu sidebar-noneoverflow">
+        <!--  BEGIN NAVBAR  -->
+        <nav class="navbar navbar-inverse navbar-static-top">
+            <header class="header navbar navbar-expand-sm">
+
+
+                <div class="nav-logo align-self-center">
+                    <a class="navbar-brand" href="{% url 'home' %}"><img alt="logo" src="{% static "assets/img/arrow-down.png" %}"> <span class="navbar-brand-name">CommOn | Rooms</span></a>
+                </div> 
+        
+            </header>
+        </nav>
+        <!--  END NAVBAR  -->
+      <div>
+    <div class="container">
+    <div class="page-header">
+            <div class="page-title">
+                <a href="{% url 'home' %}"><h3>CommOn | Rooms</h3><a>
+                <br>	
+            </div>
+        </div>
+      <div class="jumbotron">
+        <form class="" entype='multipart/form-data' method="post">
+          {% csrf_token %}
+          <h1>Please choose your interesting domain ...</h1>
+          <br>
+          <div class="alert alert-danger" role="alert">
+            <strong>WARNING</strong> : You can select only one group at a time!
+          </div>
+          {{ g_form.groups|add_class:"form-control" }}
+          {{ g_form.errors }}
+          {{ g_form.non_field_errors }}
+          <br>
+          <input id="multiple-reset" class="btn btn-primary" type="submit" name="" value="Save Changes">
+
+        </form>
+      </div>
+
+    </div>
+  </body>
+</html>

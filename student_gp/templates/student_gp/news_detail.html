@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %} 
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <div class="main-container">
+        <div class="jumbotron">
+
+        <div class="alert alert-light ghhg" role="alert">
+          <h3 class="alert-heading"><strong>{{post.title}}</strong></h3>
+          <hr>
+          <p>{{ post.body|safe }}</p>
+          <hr>
+          <p class="mb-0">{{post.published}}</p>
+          <hr>
+            {% for tag in post.tags.all %}
+                <span class="badge badge-dark">{{ tag }}</span>
+            {% endfor %}
+        </div>
+        </div>
+
+    </div>
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="{% static "assets/js/libs/jquery-3.1.1.min.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+
+
+  </body>
+</html>
