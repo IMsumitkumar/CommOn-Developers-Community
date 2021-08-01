@@ -142,6 +142,10 @@ https://www.youtube.com/watch?v=CYyUCJad954
 ```
 docker run -p 6379:6379 -d redis:5
 ```
+```
+**Error** : Got permission denied while trying to connect to the Docker daemon socket at unix
+**solution** : chmod 777 /var/run/docker.sock
+```
 
 > STEP 4
 ```python
